@@ -48,6 +48,6 @@ services:
       - TOKEN=123
       - SERVICE_NAME=template_api
       - REALM=template_api
-      - DB_HOSTS='postgresql://postgres:senha#123@postgres:5435/postgres'
+      - DB_HOSTS=postgresql://postgres:senha#123@postgres:5432/postgres
 networks:
   envoymesh: {}
