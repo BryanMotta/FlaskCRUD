@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+    - "8000:8000"
+    #read_only: true
+    shm_size: 256m
+    stdin_open: true
+    tty: true
+    networks:
+      envoymesh:
+        aliases:
+          - app
+    environment:
+      - WITH_TRACER=true
+      - TRACER_HOST=localhost
+      - TRACER_PORT=5775
+      - TRACER_TOKEN=123
+      - FLASK_SUPPORT=true
+      - TOKEN=123
+      - SERVICE_NAME=template_api
+      - REALM=template_api
+      - DB_HOSTS=http://localhost:9200
+      - DB_PASS=123
+      - DB_USER=luizgj
+networks:
+  envoymesh: {}

@@ -1,0 +1,12 @@
+--extra-index-url https://nx3-cideveloper.ipp.openshift.locawebcorp.com.br/repository/pypi-ipiranga/simple/
+Flask==0.12.2
+Flask-API==1.0
+Flask-RESTful==0.3.6
+mock==2.0.0
+gunicorn==19.9.0
+pytest==3.0.7
+PyYAML==3.12
+jsonschema==2.6.0
+python-dateutil==2.8.0
+ipp-rest-utils==0.0.2
+apm-utils[elastic-apm]
