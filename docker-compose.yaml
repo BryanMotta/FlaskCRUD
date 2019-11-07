@@ -1,5 +1,30 @@
 version: '3'
 services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "senha#123"
+    ports:
+      - "5435:5432"
+    volumes:
+      - /home/developer/curso_crud/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
+    networks:
+      envoymesh:
+        aliases:
+          - postgres
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "developer@ipiranga"
+      PGADMIN_DEFAULT_PASSWORD: "senha#123"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+    networks:
+      envoymesh:
+        aliases:
+          - pgadmin
   app:
     build: .
     ports:
@@ -8,6 +33,8 @@ services:
     shm_size: 256m
     stdin_open: true
     tty: true
+    depends_on:
+      - postgres
     networks:
       envoymesh:
         aliases:
@@ -21,8 +48,6 @@ services:
       - TOKEN=123
       - SERVICE_NAME=template_api
       - REALM=template_api
-      - DB_HOSTS=http://localhost:9200
-      - DB_PASS=123
-      - DB_USER=luizgj
+      - DB_HOSTS='postgresql://postgres:senha#123@postgres:5435/postgres'
 networks:
   envoymesh: {}
