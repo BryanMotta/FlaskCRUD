@@ -1,5 +1,5 @@
 --extra-index-url https://nx3-cideveloper.ipp.openshift.locawebcorp.com.br/repository/pypi-ipiranga/simple/
-Flask==0.12.2
+Flask==1.0
 Flask-API==1.0
 Flask-RESTful==0.3.6
 mock==2.0.0
