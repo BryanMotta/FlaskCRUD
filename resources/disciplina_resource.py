@@ -44,7 +44,7 @@ class disciplina_resource(Resource):
 
     @trc.default_trace('http:get:disciplina_resource')
     def get(self):
-        response = Response(json.dumps(Disciplina.query.all()))
+        response = disciplinas_schema.jsonify(Disciplina.query.all())
         response.status_code = 200
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -56,7 +56,10 @@ class disciplina_resource(Resource):
         db.session.add(nova_disciplina)
         db.session.commit()
 
-        return disciplina_schema.jsonify(nova_disciplina)
+        response = disciplina_schema.jsonify(nova_disciplina)
+        response.status_code = 201
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
     @trc.default_trace('http:get:disciplina_resource')
     def delete(self):
@@ -66,18 +69,22 @@ class disciplina_resource(Resource):
         db.session.delete(disciplina)
         db.session.commit()
 
-        return ''
+        response = Response()
+        response.status_code = 200
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
     @trc.default_trace('http:get:disciplina_resource')
     def put(self):
 
         disciplina_id = request.json['disciplina_id']
-
         disciplina_db = Disciplina.query.get(disciplina_id)
-
         disciplina_db.nome = request.json['nome']
 
         db.session.add(disciplina_db)
         db.session.commit()
 
-        return disciplina_schema.jsonify(disciplina_db)
+        response = disciplina_schema.jsonify(disciplina_db)
+        response.status_code = 200
+        response.headers['Content-Type'] = 'application/json'
+        return response

@@ -52,7 +52,6 @@ class turma_resource(Resource):
     @trc.default_trace('http:get:turma_resource')
     def post(self):
         nome = request.json['nome']
-
         nova_turma = Turma(nome)
 
         db.session.add(nova_turma)
@@ -61,7 +60,6 @@ class turma_resource(Resource):
         response = turma_schema.jsonify(nova_turma)
         response.status_code = 201
         response.headers['Content-Type'] = 'application/json'
-        response.headers['Location'] = '123'
         return response
 
     @trc.default_trace('http:get:turma_resource')
@@ -72,17 +70,21 @@ class turma_resource(Resource):
         db.session.delete(turma)
         db.session.commit()
 
-        return ''
+        response = Response()
+        response.status_code = 200
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
     @trc.default_trace('http:get:turma_resource')
     def put(self):
         turma_id = request.json['turma_id']
-
         turma_db = Turma.query.get(turma_id)
-
         turma_db.nome = request.json['nome']
 
         db.session.add(turma_db)
         db.session.commit()
 
-        return turma_schema.jsonify(turma_db)
+        response = turma_schema.jsonify(turma_db)
+        response.status_code = 200
+        response.headers['Content-Type'] = 'application/json'
+        return response
