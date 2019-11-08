@@ -7,5 +7,6 @@ export FLASK_SUPPORT=true
 export TOKEN=123
 export SERVICE_NAME=template_api
 export REALM=template_api
+export DB_HOSTS='postgresql://postgres:senha#123@localhost:5435/postgres'
 
 gunicorn --bind 0.0.0.0:8000 --reuse-port wsgi:application

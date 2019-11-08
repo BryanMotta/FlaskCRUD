@@ -13,6 +13,11 @@ import apm.tracer.tracer_config as trc_config
 import apm.tracer.tracers as trc
 from monitoring import setup
 from monitoring.resource import Metrics
+from models import *
+import os
+from resources.aluno_resource import aluno_resource
+from resources.turma_resource import turma_resource
+from resources.disciplina_resource import disciplina_resource
 
 
 app = Flask(__name__)
@@ -28,10 +33,21 @@ api.add_resource(Status, '/template_api/status',
                  resource_class_kwargs={'configuracoes': token,
                                         'start_time': start_time}
                  )
+api.add_resource(aluno_resource, '/template_api/aluno')
+api.add_resource(turma_resource, '/template_api/turma')
+api.add_resource(disciplina_resource, '/template_api/disciplina')
 
 trc_config.init_tracer("template_api")
 logger = logging.getLogger(__name__)
 
+DB_HOST = os.environ['DB_HOSTS']
+
+app.config['SQLALCHEMY_DATABASE_URI'] = DB_HOST
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.app = app
+db.init_app(app)
+ma.init_app(app)
+db.create_all()
 
 @app.errorhandler(Exception)
 @trc.default_trace('exception:default_exception')
