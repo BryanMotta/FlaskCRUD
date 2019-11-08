@@ -7,7 +7,7 @@ services:
     ports:
       - "5435:5432"
     volumes:
-      - /home/developer/curso_crud/Docker-Compose/PostgreSQL:/var/lib/postgresql/data 
+      - $HOME/PostgreSQL:/var/lib/postgresql/data 
     networks:
       envoymesh:
         aliases:
