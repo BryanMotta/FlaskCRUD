@@ -1,24 +1,24 @@
 #! /usr/bin/python python3
-from flask import Flask, jsonify
-from werkzeug.wrappers import Response
-from flask_restful import Api
-from excecoes.custom_exception import CustomException
-import uuid
-import logging
-from recurso.status import Status
 import json
-from resources.meu_recurso_modulo import MeuRecurso
+import logging
+import os
+import uuid
 from datetime import datetime
+
 import apm.tracer.tracer_config as trc_config
 import apm.tracer.tracers as trc
+from excecoes.custom_exception import CustomException
+from flask import Flask, jsonify
+from flask_restful import Api
+from models import *
 from monitoring import setup
 from monitoring.resource import Metrics
-from models import *
-import os
+from recurso.status import Status
 from resources.aluno_resource import aluno_resource
-from resources.turma_resource import turma_resource
 from resources.disciplina_resource import disciplina_resource
-
+from resources.meu_recurso_modulo import MeuRecurso
+from resources.turma_resource import turma_resource
+from werkzeug.wrappers import Response
 
 app = Flask(__name__)
 api = Api(app)

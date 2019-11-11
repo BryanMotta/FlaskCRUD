@@ -44,7 +44,7 @@ class aluno_resource(Resource):
 
     @trc.default_trace('http:get:aluno_resource')
     def get(self):
-        response = Response(json.dumps(Aluno.query.all()))
+        response = alunos_schema.jsonify(Aluno.query.all())
         response.status_code = 200
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -65,7 +65,10 @@ class aluno_resource(Resource):
         db.session.add(novo_aluno)
         db.session.commit()
 
-        return aluno_schema.jsonify(novo_aluno)
+        response = aluno_schema.jsonify(novo_aluno)
+        response.status_code = 201
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
     @trc.default_trace('http:get:aluno_resource')
     def delete(self):
@@ -75,14 +78,16 @@ class aluno_resource(Resource):
         db.session.delete(aluno)
         db.session.commit()
 
-        return ''
+        response = Response()
+        response.status_code = 200
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
 
     @trc.default_trace('http:get:aluno_resource')
     def put(self):
 
         aluno_id = request.json['aluno_id']
-
         aluno_db = Aluno.query.get(aluno_id)
 
         aluno_db.nome = request.json['nome']
@@ -92,7 +97,10 @@ class aluno_resource(Resource):
         db.session.add(aluno_db)
         db.session.commit()
 
-        return aluno_schema.jsonify(aluno_db) 
+        response = aluno_schema.jsonify(aluno_db) 
+        response.status_code = 200
+        response.headers['Content-Type'] = 'application/json'
+        return response
 
 
 

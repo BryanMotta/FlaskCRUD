@@ -53,5 +53,4 @@ class MeuRecurso(Resource):
         response = Response()
         response.status_code = 201
         response.headers['Content-Type'] = 'application/json'
-        response.headers['Location'] = '123'
         return response
